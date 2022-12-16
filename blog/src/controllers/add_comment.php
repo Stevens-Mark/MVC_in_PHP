@@ -1,6 +1,6 @@
 <?php
 
-require_once('src/model/comment.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/src/model/comment.php');
 
 function addComment(string $post, array $input)
 {

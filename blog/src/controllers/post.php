@@ -1,7 +1,7 @@
 <?php
 
-require_once('src/model.php');
-// require_once('src/model/comment.php'); for old way
+require_once($_SERVER['DOCUMENT_ROOT'] . '/src/model.php');
+// require_once($_SERVER['DOCUMENT_ROOT'] . '/src/model/comment.php'); for old way
 
 function post(string $identifier)
 {
@@ -10,7 +10,7 @@ function post(string $identifier)
     // $comments = getComments($identifier);
 
     $post = getPostWithComments($identifier);
-    require('templates/post.php');
+    require($_SERVER['DOCUMENT_ROOT'] . '/templates/post.php');
 }
 
 // just asked you for a new feature! We'd like to be able to display a page with the comments of each post.

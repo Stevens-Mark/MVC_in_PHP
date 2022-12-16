@@ -1,5 +1,9 @@
 <?php
 
+// used for linking files & links to pages
+$rootPath = $_SERVER['DOCUMENT_ROOT'];
+$rootUrl = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/';
+
 function dbConnect() {
     try {
       $database = new PDO('mysql:host=localhost;dbname=blog;charset=utf8;port=3306', 'root', 'root');
