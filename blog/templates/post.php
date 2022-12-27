@@ -10,11 +10,11 @@
 
         <article>
             <h3>
-                <?= htmlspecialchars($post['title']) ?>
-                <em>le <?= $post['creation_date'] ?></em>
+                <?= htmlspecialchars($post->title) ?>
+                <em>le <?= $post->creation_date ?></em>
             </h3>
               <p  class="content">
-                <?= nl2br(htmlspecialchars($post['content'])) ?>
+                <?= nl2br(htmlspecialchars($post->content)) ?>
             </p>
         </article>
     </section>
@@ -41,7 +41,7 @@
     <section>
         <h2>Add a Comment</h2>
           <!-- form to add a comment to a post -->
-        <form action="index.php?action=addComment&id=<?= $post['post_id'] ?>" method="post">
+        <form action="index.php?action=addComment&id=<?= $post->post_id ?>" method="post">
             <div>
                 <label for="author">Author</label><br />
                 <input type="text" id="author" name="author" />

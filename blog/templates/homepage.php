@@ -14,13 +14,13 @@ $title = "The Blog of AVBN"; ?>
 foreach ($posts as $post): ?>
     <article>
         <h3>
-            <?= htmlspecialchars($post['title']); ?>
-            <em>le <?= $post['creation_date']; ?></em>
+            <?= htmlspecialchars($post->title); ?>
+            <em>le <?= $post->creation_date; ?></em>
         </h3>
         <p class="content">
-            <?= nl2br(htmlspecialchars($post['content'])); ?>
+            <?= nl2br(htmlspecialchars($post->content)); ?>
             <br />
-            <em><a href="index.php?action=post&id=<?= urlencode($post['post_id']) ?>">Comments</a></em>
+            <em><a href="index.php?action=post&id=<?= urlencode($post->post_id) ?>">Comments</a></em>
             <!-- link to main contoller in index.php with parameters for action & id -->
         </p>
     </article>

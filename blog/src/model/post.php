@@ -22,14 +22,13 @@ function getPosts(): array {
     );
     $posts = [];
     while (($row = $statement->fetch())) {
-      $post = [
-          'post_id' => $row['post_id'],
-          'title' => $row['title'],
-          'creation_date' => $row['french_creation_date'],
-          'content' => $row['content'],
-      ];
+        $post = new Post();
+        $post ->post_id = $row['post_id'];
+        $post ->title = $row['title'];
+        $post ->creation_date = $row['french_creation_date'];
+        $post ->content = $row['content'];
 
-      $posts[] = $post;
+        $posts[] = $post;
     }
 
     return $posts;
@@ -45,12 +44,11 @@ function getPost(string $identifier) {
     $statement->execute([$identifier]);
 
     $row = $statement->fetch();
-    $post = [
-        'post_id' => $row['post_id'],
-        'title' => $row['title'],
-        'creation_date' => $row['french_creation_date'],
-        'content' => $row['content'],
-        ];
+    $post = new Post();
+    $post ->post_id = $row['post_id'];
+    $post ->title = $row['title'];
+    $post ->creation_date = $row['french_creation_date'];
+    $post ->content = $row['content'];
 
     return $post;
 }
@@ -94,6 +92,7 @@ function getPostWithComments(string $identifier) {
 }
 
 function dbConnect() {
-  $database = new PDO('mysql:host=localhost;dbname=blog;charset=utf8;port=3306', 'root', 'root');
-  return $database;
+    $database = new PDO('mysql:host=localhost;dbname=blog;charset=utf8;port=3306', 'root', 'root');
+    return $database;
 }
+
