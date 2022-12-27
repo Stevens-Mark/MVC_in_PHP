@@ -4,14 +4,12 @@
 $rootPath = $_SERVER['DOCUMENT_ROOT'];
 $rootUrl = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/';
 
-function dbConnect() {
-    try {
-      $database = new PDO('mysql:host=localhost;dbname=blog;charset=utf8;port=3306', 'root', 'root');
-
-      return $database;
-    } catch(Exception $e) {
-        die('Error : '.$e->getMessage());
-    }
+class Post
+{
+    public string $post_id;
+    public string $title;
+    public string $creation_date;
+    public string $content;
 }
 
 function getPosts(): array {
@@ -57,6 +55,7 @@ function getPost(string $identifier) {
     return $post;
 }
 
+// short code way to get post & comments without classes
 function getPostWithComments(string $identifier) {
 
     $database = dbConnect();  // We connect to the database.
@@ -94,4 +93,7 @@ function getPostWithComments(string $identifier) {
     return $post;
 }
 
-
+function dbConnect() {
+  $database = new PDO('mysql:host=localhost;dbname=blog;charset=utf8;port=3306', 'root', 'root');
+  return $database;
+}

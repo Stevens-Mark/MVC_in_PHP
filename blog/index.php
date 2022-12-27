@@ -3,30 +3,35 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/src/controllers/add_comment.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/src/controllers/homepage.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/src/controllers/post.php');
 
-if (isset($_GET['action']) && $_GET['action'] !== '') {
-    if ($_GET['action'] === 'post') {
-        if (isset($_GET['id']) && $_GET['id'] > 0) {
-            $identifier = $_GET['id'];
+try {
+    if (isset($_GET['action']) && $_GET['action'] !== '') {
+        if ($_GET['action'] === 'post') {
+            if (isset($_GET['id']) && $_GET['id'] > 0) {
+                $identifier = $_GET['id'];
 
-            post($identifier); // call post controller/function with identifier as parameter
-        } else {
-            echo 'Error: no blog ID sent';
-            die;
-        }
-    } elseif ($_GET['action'] === 'addComment') {
-        if (isset($_GET['id']) && $_GET['id'] > 0) {
-            $identifier = $_GET['id'];
+                post($identifier); // call post controller/function with identifier as parameter
+            } else {
+              throw new Exception("No blog ID sent");
+            }
+        } elseif ($_GET['action'] === 'addComment') {
+            if (isset($_GET['id']) && $_GET['id'] > 0) {
+                $identifier = $_GET['id'];
+                $input = $_POST;
 
-            addComment($identifier, $_POST); // call add_comment controller/function with identifier & user input data as parameters
+                addComment($identifier, $input); // call add_comment controller/function with identifier/post_id  & user input data as parameters
+            } else {
+                throw new Exception("No Post ID sent");
+            }
         } else {
-            echo 'Error: no Post ID sent';
-            die;
+          throw new Exception("The page you are looking for does not exist.");
         }
     } else {
-        echo "404 error: the page you are looking for does not exist.";
+        homepage(); // call homepage controller/function
     }
-} else {
-	  homepage(); // call homepage controller/function
+} catch (Exception $e) {
+    $errorMessage = $e->getMessage();
+    
+    require($_SERVER['DOCUMENT_ROOT'] .'/templates/error.php');
 }
 
 // The "router" (HERE) is a component of the code that has the role of receiving all the requests from the application and routing each one to the right controller.

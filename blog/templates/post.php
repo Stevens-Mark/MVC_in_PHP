@@ -8,7 +8,7 @@
         <h1>The super blog of AVBN !</h1>
         <h2><a href="index.php">Back to the list of blog posts</a></h2>
 
-        <article">
+        <article>
             <h3>
                 <?= htmlspecialchars($post['title']) ?>
                 <em>le <?= $post['creation_date'] ?></em>
@@ -23,11 +23,17 @@
         <h2>Comments</h2>
 
         <?php
-        // ($comments as $comment) used for old way: calling getPosts & getComments seperately
-        foreach ($post['comments'] as $comment) : ?>
+        // short code way to get post & comments: $post['comments'] as $comment) without classes
+        foreach ($comments as $comment) : ?>
             <article>
-                <p><strong><?= htmlspecialchars(ucfirst($comment['author'])) ?></strong> le <?= $comment['comment_date'] ?></p>
-                <p><?= nl2br(htmlspecialchars($comment['comment'])) ?></p>
+                <!-- access to the properties of an object ($object->property) -->
+                <p><strong><?= htmlspecialchars(ucfirst($comment->author)) ?></strong> le <?= $comment->comment_date ?></p>
+                <p><?= nl2br(htmlspecialchars($comment->comment)) ?></p>
+
+                <!-- short code way to get post & comments: without classes -->
+                <!-- access to the indexes of an array ($array['index']) -->
+                <!-- <p><strong><= htmlspecialchars(ucfirst($comment['author'])) ?></strong> le <= $comment['comment_date'] ?></p>
+                <p><= nl2br(htmlspecialchars($comment['comment'])) ?></p> -->
             </article>
         <?php endforeach ?> 
     </section>

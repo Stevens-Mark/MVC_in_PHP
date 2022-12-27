@@ -1,15 +1,16 @@
 <?php
 
-require_once($_SERVER['DOCUMENT_ROOT'] . '/src/model.php');
-// require_once($_SERVER['DOCUMENT_ROOT'] . '/src/model/comment.php'); for old way
+require_once($_SERVER['DOCUMENT_ROOT'] . '/src/model/post.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/src/model/comment.php'); 
 
 function post(string $identifier)
 {
-    // old way
-    // $post = getPost($identifier);
-    // $comments = getComments($identifier);
+    
+    $post = getPost($identifier);
+    $comments = getComments($identifier);
 
-    $post = getPostWithComments($identifier);
+    // short code way to get post & comments without classes
+    // $post = getPostWithComments($identifier);
     require($_SERVER['DOCUMENT_ROOT'] . '/templates/post.php');
 }
 

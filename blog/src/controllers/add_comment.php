@@ -2,7 +2,7 @@
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/src/model/comment.php');
 
-function addComment(string $post, array $input)
+function addComment(string $post_id, array $input)
 {
     $author = null;
     $comment = null;
@@ -10,13 +10,13 @@ function addComment(string $post, array $input)
         $author = $input['author'];
         $comment = $input['comment'];
     } else {
-        die('The form data is invalid.');
+        throw new Exception("The form data is invalid.");
     }
 
-    $success = createComment($post, $author, $comment);
-    if (!$success) {
-        die('Impossible to add comment !');
+    $commentAddedSuccess = createComment($post_id, $author, $comment);
+    if (!$commentAddedSuccess) {
+        throw new Exception("Impossible to add comment !");
     } else {
-        header('Location: index.php?action=post&id=' . $post);
+        header('Location: index.php?action=post&id=' . $post_id);
     }
 }
