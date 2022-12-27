@@ -5,12 +5,9 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/src/model/comment.php');
 
 function post(string $identifier)
 {
-    
     $post = getPost($identifier);
     $comments = getComments($identifier);
 
-    // short code way to get post & comments without classes
-    // $post = getPostWithComments($identifier);
     require($_SERVER['DOCUMENT_ROOT'] . '/templates/post.php');
 }
 

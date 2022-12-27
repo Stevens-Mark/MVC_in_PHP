@@ -23,17 +23,11 @@
         <h2>Comments</h2>
 
         <?php
-        // short code way to get post & comments: $post['comments'] as $comment) without classes
         foreach ($comments as $comment) : ?>
             <article>
                 <!-- access to the properties of an object ($object->property) -->
                 <p><strong><?= htmlspecialchars(ucfirst($comment->author)) ?></strong> le <?= $comment->comment_date ?></p>
                 <p><?= nl2br(htmlspecialchars($comment->comment)) ?></p>
-
-                <!-- short code way to get post & comments: without classes -->
-                <!-- access to the indexes of an array ($array['index']) -->
-                <!-- <p><strong><= htmlspecialchars(ucfirst($comment['author'])) ?></strong> le <= $comment['comment_date'] ?></p>
-                <p><= nl2br(htmlspecialchars($comment['comment'])) ?></p> -->
             </article>
         <?php endforeach ?> 
     </section>

@@ -53,44 +53,6 @@ function getPost(string $identifier) {
     return $post;
 }
 
-// short code way to get post & comments without classes
-function getPostWithComments(string $identifier) {
-
-    $database = dbConnect();  // We connect to the database.
-
-    // retrieve post from post table & all associated comments from comment table
-    $retrievePostWithComments = $database->prepare(
-        "SELECT *, DATE_FORMAT(c.comment_date, '%d/%m/%Y à %Hh%imin%ss') AS french_creation_date, DATE_FORMAT(p.creation_date, '%d/%m/%Y à %Hh%imin%ss') AS french_post_date FROM posts p LEFT JOIN comments c on p.post_id = c.post_id WHERE p.post_id = :post_id"
-    );
-    $retrievePostWithComments->execute([
-        'post_id' => $identifier,
-    ]);
-    
-    $postWithComments = $retrievePostWithComments->fetchAll(PDO::FETCH_ASSOC);
-
-    $post = [
-        'post_id' => $postWithComments[0]['post_id'],
-        'title' => $postWithComments[0]['title'],
-        'content' => $postWithComments[0]['content'],
-        'creation_date' => $postWithComments[0]['french_post_date'],
-        'comments' => [],
-    ];
-
-    // if comment table not empty then populate all comment data into post comment array
-    foreach($postWithComments as $comment) {
-        if (!is_null($comment['id'])) {
-            $post['comments'][] = [
-                'id' => $comment['id'],
-                'author' => $comment['author'],
-                'comment' => $comment['comment'],
-                'comment_date' => $comment['french_creation_date'],
-            ];
-        }
-    }
-
-    return $post;
-}
-
 function dbConnect() {
     $database = new PDO('mysql:host=localhost;dbname=blog;charset=utf8;port=3306', 'root', 'root');
     return $database;
