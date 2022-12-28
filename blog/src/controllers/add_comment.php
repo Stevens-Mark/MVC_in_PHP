@@ -5,6 +5,8 @@ namespace Application\Controllers\AddComment;
 require_once($_SERVER['DOCUMENT_ROOT'] . '/src/lib/database.php'); 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/src/model/comment.php');
 
+use Application\Model\Comment\CommentRepository;
+
 class AddComment 
 {
     public function execute(string $post_id, array $input)

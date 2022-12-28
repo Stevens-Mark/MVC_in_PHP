@@ -1,5 +1,7 @@
 <?php
 
+namespace Application\Model\Comment;
+
 require_once($_SERVER['DOCUMENT_ROOT'] . '/src/lib/database.php'); 
 
 class Comment
