@@ -4,42 +4,17 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/src/lib/database.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/src/model/post.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/src/model/comment.php'); 
 
+use Application\Model\Post\PostRepository; // used as an alias for PostRepository as this is the declard namespace in src/model/Post
+
 function post(string $identifier)
 {
     $postRepository = new PostRepository(); // make a new instance of class PostRepository
-    $postRepository->connection = new DatabaseConnection(); // instantiate the new instance of PostRepository with the new instantitated instance of DatabaseConnection (a new connection)
-    $post = $postRepository->getPost($identifier); // instantiate the new instance of PostRepository using it's method/to ask the object to send back the right blog post.
-    $comments = getComments($identifier);
+    $postRepository->connection = new DatabaseConnection(); // instantiate PostRepository with instantitated instance of DatabaseConnection
+    $post = $postRepository->getPost($identifier); // instantiate PostRepository using it's method/to ask the object to send back the right blog post.
+
+    $commentRepository = new CommentRepository();
+    $commentRepository->connection = new DatabaseConnection();
+    $comments = $commentRepository->getComments($identifier);
 
     require($_SERVER['DOCUMENT_ROOT'] . '/templates/post.php');
 }
-
-// just asked you for a new feature! We'd like to be able to display a page with the comments of each post.
-// Remember the "Comments" link under each post?
-// When we click on it, we will display a page with the post and its list of comments.
-// Um, but how do we do this with an MVC architecture? 🤔
-// I suggest the following plan to get you there:
-// You start by writing the view. After all, your main goal is still to display the comments page to the user!
-// Then you will write a controller, but in a very fast version, that will pass fake data to the view. This will allow you to check that your display matches your expectations.
-// You will refine the controller by making it dynamic and start imagining the services you would like to ask to your model.
-// You will finish by implementing your model, so that it responds correctly to the requests of your controller.
-
-// pass fake data to the view 
-
-// $post = [
-//     'title' => 'Un faux titre.',
-//     'french_creation_date' => '03/03/2022 à 12h14min42s',
-//     'content' => "Le faux contenu de mon billet.\nC'est fantastique !",
-// ];
-// $comments = [
-//     [
-//         'author' => 'Un premier faux auteur',
-//         'french_creation_date' => '03/03/2022 à 12h15min42s',
-//         'comment' => 'Un faux commentaire.\n Le premier.',
-//     ],
-//     [
-//         'author' => 'Un second faux auteur',
-//         'french_creation_date' => '03/03/2022 à 12h16min42s',
-//         'comment' => 'Un faux commentaire.\n Le second.',
-//     ],
-// ];

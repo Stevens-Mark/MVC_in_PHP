@@ -1,9 +1,8 @@
 <?php
 
+namespace Application\Model\Post;
+
 require_once($_SERVER['DOCUMENT_ROOT'] . '/src/lib/database.php'); 
-// used for linking files & links to pages
-$rootPath = $_SERVER['DOCUMENT_ROOT'];
-$rootUrl = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/';
 
 class Post
 {
@@ -16,7 +15,8 @@ class Post
 class PostRepository
 {
     // property $connection: of type class DatabaseConnection (object) which contains method getConnection
-    public DatabaseConnection $connection;
+    // a "\" is added to the class DatabaseConnection as it is in the global namespace and not Application\Model\Post
+    public \DatabaseConnection $connection;
 
     public function getPost(/* PostRepository $this, */ string $identifier): Post
     {   // make the connection by calling getConnection method of property connection  

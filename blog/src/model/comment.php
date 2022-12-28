@@ -1,5 +1,7 @@
 <?php
 
+require_once($_SERVER['DOCUMENT_ROOT'] . '/src/lib/database.php'); 
+
 class Comment
 {
     public string $author;
@@ -7,41 +9,37 @@ class Comment
     public string $comment;
 }
 
-function getComments(string $identifier): array {
+class CommentRepository
+{   // property $connection: of type class DatabaseConnection (object) which contains method getConnection
+    public \DatabaseConnection $connection;
 
-	$database = commentDbConnect(); // We connect to the database.
+    public function getComments(string $identifier): array {
+          // make the connection by calling getConnection method of property connection  
+          $statement = $this->connection->getConnection()->prepare(
+              "SELECT *, DATE_FORMAT(comment_date, '%d/%m/%Y à %Hh%imin%ss') AS french_creation_date FROM comments WHERE post_id = ? ORDER BY comment_date DESC"
+          );
+          $statement->execute([$identifier]);
 
-  $statement = $database->prepare(
-      "SELECT *, DATE_FORMAT(comment_date, '%d/%m/%Y à %Hh%imin%ss') AS french_creation_date FROM comments WHERE post_id = ? ORDER BY comment_date DESC"
-  );
-  $statement->execute([$identifier]);
+          $comments = [];
+          while (($row = $statement->fetch())) {
+              $comment = new Comment();
+              $comment ->author = $row['author'];
+              $comment ->comment_date = $row['french_creation_date'];
+              $comment ->comment = $row['comment'];
+              // var_dump($comment); // great for debugging to see comment values
+              $comments[] = $comment;
+          }
 
-  $comments = [];
-  while (($row = $statement->fetch())) {
-      $comment = new Comment();
-      $comment ->author = $row['author'];
-      $comment ->comment_date = $row['french_creation_date'];
-      $comment ->comment = $row['comment'];
-      // var_dump($comment); // great for debugging to see comment values
-      $comments[] = $comment;
-  }
+          return $comments;
+        }
 
-  return $comments;
-}
+      public function createComment(string $post_id, string $author, string $comment): bool
+      {   // make the connection by calling getConnection method of property connection  
+          $statement = $this->connection->getConnection()->prepare(
+              'INSERT INTO comments(post_id, author, comment, comment_date) VALUES(?, ?, ?, NOW())'
+          );
+          $commentIsAdded = $statement->execute([$post_id, $author, $comment]);
 
-function createComment(string $post_id, string $author, string $comment)
-{
-	$database = commentDbConnect();
-
-	$statement = $database->prepare(
-    	'INSERT INTO comments(post_id, author, comment, comment_date) VALUES(?, ?, ?, NOW())'
-	);
-	$commentIsAdded = $statement->execute([$post_id, $author, $comment]);
-
-	return ($commentIsAdded > 0);
-}
-
-function commentDbConnect() {
-    $database = new PDO('mysql:host=localhost;dbname=blog;charset=utf8;port=3306', 'root', 'root');
-    return $database;
+          return ($commentIsAdded > 0);
+      }
 }
