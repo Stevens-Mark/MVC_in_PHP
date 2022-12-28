@@ -1,12 +1,14 @@
 <?php
 
+require_once($_SERVER['DOCUMENT_ROOT'] . '/src/lib/database.php'); 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/src/model/post.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/src/model/comment.php'); 
 
 function post(string $identifier)
 {
-    $postRepository = new PostRepository();
-    $post = $postRepository->getPost($identifier);
+    $postRepository = new PostRepository(); // make a new instance of class PostRepository
+    $postRepository->connection = new DatabaseConnection(); // instantiate the new instance of PostRepository with the new instantitated instance of DatabaseConnection (a new connection)
+    $post = $postRepository->getPost($identifier); // instantiate the new instance of PostRepository using it's method/to ask the object to send back the right blog post.
     $comments = getComments($identifier);
 
     require($_SERVER['DOCUMENT_ROOT'] . '/templates/post.php');

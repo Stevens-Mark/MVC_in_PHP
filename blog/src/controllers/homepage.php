@@ -1,9 +1,11 @@
 <?php
 
+require_once($_SERVER['DOCUMENT_ROOT'] . '/src/lib/database.php'); 
 require_once($_SERVER['DOCUMENT_ROOT'] . "/src/model/post.php");
 
 function homepage() {
     $postRepository = new PostRepository();
+    $postRepository->connection = new DatabaseConnection();
     $posts = $postRepository->getPosts();
 
     require($_SERVER['DOCUMENT_ROOT'] .'/templates/homepage.php');
