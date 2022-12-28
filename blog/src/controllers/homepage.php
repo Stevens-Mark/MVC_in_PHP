@@ -3,7 +3,8 @@
 require_once($_SERVER['DOCUMENT_ROOT'] . "/src/model/post.php");
 
 function homepage() {
-    $posts = getPosts();
+    $postRepository = new PostRepository();
+    $posts = $postRepository->getPosts();
 
     require($_SERVER['DOCUMENT_ROOT'] .'/templates/homepage.php');
 }

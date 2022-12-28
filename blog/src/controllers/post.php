@@ -5,7 +5,8 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/src/model/comment.php');
 
 function post(string $identifier)
 {
-    $post = getPost($identifier);
+    $postRepository = new PostRepository();
+    $post = $postRepository->getPost($identifier);
     $comments = getComments($identifier);
 
     require($_SERVER['DOCUMENT_ROOT'] . '/templates/post.php');
