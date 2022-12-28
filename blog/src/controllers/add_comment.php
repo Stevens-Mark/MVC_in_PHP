@@ -1,5 +1,5 @@
 <?php
-
+require_once($_SERVER['DOCUMENT_ROOT'] . '/src/lib/database.php'); 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/src/model/comment.php');
 
 function addComment(string $post_id, array $input)
@@ -13,8 +13,10 @@ function addComment(string $post_id, array $input)
         throw new Exception("The form data is invalid.");
     }
 
-    $commentAddedSuccess = createComment($post_id, $author, $comment);
-    if (!$commentAddedSuccess) {
+    $commentRepository = new CommentRepository(); // make a new instance 
+    $commentRepository->connection = new DatabaseConnection(); // instantiate with instantitated instance of DatabaseConnection
+    $success = $commentRepository->createComment($post_id, $author, $comment); // instantiate using it's method/add user input
+    if (!$success) {
         throw new Exception("Impossible to add comment !");
     } else {
         header('Location: index.php?action=post&id=' . $post_id);
