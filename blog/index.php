@@ -9,7 +9,9 @@ try {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
                 $identifier = $_GET['id'];
 
-                post($identifier); // call post controller/function with identifier as parameter
+                $postpage = new Postpage(); // create new instance of class /controller
+                $postpage->displaypostpage($identifier); // call method to display page
+                // (new Postpage())->displaypostpage($identifier); // shorthand version
             } else {
               throw new Exception("No blog ID sent");
             }
@@ -18,7 +20,9 @@ try {
                 $identifier = $_GET['id'];
                 $input = $_POST;
 
-                addComment($identifier, $input); // call add_comment controller/function with identifier/post_id  & user input data as parameters
+                $addComment = new AddComment(); // create new instance of class /controller
+                $addComment->execute($identifier, $input); // call method 'execute' to add comment with identifier/post_id  & user input data as parameters
+                // (new AddComment())->execute($identifier, $input); // shorthand version
             } else {
                 throw new Exception("No Post ID sent");
             }
@@ -26,7 +30,9 @@ try {
           throw new Exception("The page you are looking for does not exist.");
         }
     } else {
-        homepage(); // call homepage controller/function
+        $homepage = new Homepage(); // create new instance of class /controller
+        $homepage->displayHomepage(); // call method to display page
+        // (new Homepage())->displayHomepage(); // shorthand version
     }
 } catch (Exception $e) {
     $errorMessage = $e->getMessage();
