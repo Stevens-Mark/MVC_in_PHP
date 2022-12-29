@@ -4,8 +4,6 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/src/controllers/add_comment.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/src/controllers/homepage.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/src/controllers/post.php');
 
-use Application\Controllers\AddComment;
-
 try {
     if (isset($_GET['action']) && $_GET['action'] !== '') {
         if ($_GET['action'] === 'post') {

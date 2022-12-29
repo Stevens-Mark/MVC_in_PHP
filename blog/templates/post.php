@@ -26,7 +26,7 @@
         foreach ($comments as $comment) : ?>
             <article>
                 <!-- access to the properties of an object ($object->property) -->
-                <p><strong><?= htmlspecialchars(ucfirst($comment->author)) ?></strong> le <?= $comment->comment_date ?></p>
+                <p><strong><?= htmlspecialchars(ucfirst($comment->author)) ?></strong> le <?= $comment->comment_date ?> <a href="index.php?action=updateComment&id=<?= urlencode($comment->comment_id) ?>">Modify</a></p>
                 <p><?= nl2br(htmlspecialchars($comment->comment)) ?></p>
             </article>
         <?php endforeach ?> 
