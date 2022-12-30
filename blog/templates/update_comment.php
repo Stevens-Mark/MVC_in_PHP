@@ -11,9 +11,12 @@
     <h2>Update the Comment</h2>
 
     <p><?= $comment->comment_date ?></p>
-
       <!-- form to update comment on the post -->
-    <form action="index.php?action=updteComment&id=<?= $comment->comment_id ?>" method="post">
+    <form action="index.php?action=updateComment&id=<?= $comment->comment_id ?>" method="post">
+        <div class="sr-only">
+            <label for="post_id"">Post ID</label>
+            <input type="hidden" id="post_id" name="post_id" value="<?php echo($comment->post_id); ?>">
+        </div>
         <div>
             <label for="author">Author</label><br />
             <input type="text" id="author" name="author"  value="<?php echo strip_tags($comment->author); ?>" />

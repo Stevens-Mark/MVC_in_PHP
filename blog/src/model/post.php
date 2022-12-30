@@ -20,12 +20,12 @@ class PostRepository
     // a "\" is added to the class DatabaseConnection as it is in the global namespace and not Application\Model\Post
     public \DatabaseConnection $connection;
 
-    public function getPost(/* PostRepository $this, */ string $identifier): Post
+    public function getPost(/* PostRepository $this, */ string $post_id): Post
     {   // make the connection by calling getConnection method of property connection  
         $statement = $this->connection->getConnection()->prepare(
             "SELECT post_id, title, content, DATE_FORMAT(creation_date, '%d/%m/%Y à %Hh%imin%ss') AS french_creation_date FROM posts WHERE post_id = ?"
         );
-        $statement->execute([$identifier]);
+        $statement->execute([$post_id]);
 
         $row = $statement->fetch();
         $post = new Post();

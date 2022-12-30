@@ -32,10 +32,15 @@ try {
         } elseif ($_GET['action'] === 'updateComment') {
           if (isset($_GET['id']) && $_GET['id'] > 0) {
               $identifier = $_GET['id'];
-              // $input = $_POST;
+
+              // It sets the input only when the HTTP method is POST (ie. the form is submitted).
+              $input = null;
+              if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                  $input = $_POST;
+              }
 
               $updateComment = new updateComment(); // create new instance of class /controller
-              $updateComment->execute($identifier, $input); // call method 'execute' to update comment with identifier/post_id  & user input data as parameters
+              $updateComment->execute($identifier, $input); // call method 'execute' to update comment with identifier/comment_id  & user input data as parameters
               // (new updateComment())->execute($identifier, $input); // shorthand version
           } else {
               throw new Exception("No comment ID sent");

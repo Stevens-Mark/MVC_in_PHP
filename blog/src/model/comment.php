@@ -6,6 +6,8 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/src/lib/database.php');
 
 class Comment
 {
+    public string $comment_id;
+    public string $post_id;
     public string $author;
     public string $comment_date;
     public string $comment;
@@ -25,7 +27,7 @@ class CommentRepository
         $row = $statement->fetch();
  
         $comment = new Comment();
-        $comment->identifier = $row['id'];
+        $comment->comment_id = $row['id'];
         $comment->post_id = $row['post_id'];
         $comment->author = $row['author'];
         $comment->comment_date = $row['french_creation_date'];
@@ -33,7 +35,6 @@ class CommentRepository
         // var_dump($comment);
         return $comment;
     }
-
 
     public function getComments(string $identifier): array {
         // make the connection by calling getConnection method of property connection  
@@ -46,6 +47,7 @@ class CommentRepository
         while (($row = $statement->fetch())) {
             $comment = new Comment();
             $comment ->comment_id = $row['id'];
+            $comment->post_id = $row['post_id'];
             $comment ->author = $row['author'];
             $comment ->comment_date = $row['french_creation_date'];
             $comment ->comment = $row['comment'];
@@ -64,5 +66,15 @@ class CommentRepository
           $commentIsAdded = $statement->execute([$post_id, $author, $comment]);
 
           return ($commentIsAdded > 0);
+      }
+
+      public function updateComment(string $comment_id, string $author, string $comment): bool
+      {   // make the connection by calling getConnection method of property connection  
+          $statement = $this->connection->getConnection()->prepare(
+              'UPDATE comments SET author = ?, comment = ?, comment_date = NOW() WHERE id = ?'
+          );
+          $commentIsUpdated = $statement->execute([$author, $comment, $comment_id]);
+
+          return ($commentIsUpdated > 0);
       }
 }
