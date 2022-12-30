@@ -41,10 +41,12 @@
                 <input type="text" id="author" name="author" />
             </div>
             <div>
+                <br />
                 <label for="comment">Comment</label><br />
-                <textarea id="comment" name="comment"></textarea>
+                <textarea rows="5" id="comment" name="comment"></textarea>
             </div>
             <div>
+                <br />
                 <input type="submit" />
             </div>
         </form>

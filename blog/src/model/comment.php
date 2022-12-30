@@ -26,11 +26,11 @@ class CommentRepository
  
         $comment = new Comment();
         $comment->identifier = $row['id'];
-        $comment->post = $row['post_id'];
+        $comment->post_id = $row['post_id'];
         $comment->author = $row['author'];
-        $comment->frenchCreationDate = $row['french_creation_date'];
+        $comment->comment_date = $row['french_creation_date'];
         $comment->comment = $row['comment'];
-
+        // var_dump($comment);
         return $comment;
     }
 

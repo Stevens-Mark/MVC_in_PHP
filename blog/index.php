@@ -1,11 +1,13 @@
 <?php
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/src/controllers/add_comment.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/src/controllers/update_comment.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/src/controllers/homepage.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/src/controllers/post.php');
 
 try {
     if (isset($_GET['action']) && $_GET['action'] !== '') {
+
         if ($_GET['action'] === 'post') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
                 $identifier = $_GET['id'];
@@ -27,6 +29,17 @@ try {
             } else {
                 throw new Exception("No Post ID sent");
             }
+        } elseif ($_GET['action'] === 'updateComment') {
+          if (isset($_GET['id']) && $_GET['id'] > 0) {
+              $identifier = $_GET['id'];
+              // $input = $_POST;
+
+              $updateComment = new updateComment(); // create new instance of class /controller
+              $updateComment->execute($identifier, $input); // call method 'execute' to update comment with identifier/post_id  & user input data as parameters
+              // (new updateComment())->execute($identifier, $input); // shorthand version
+          } else {
+              throw new Exception("No comment ID sent");
+          }
         } else {
           throw new Exception("The page you are looking for does not exist.");
         }
@@ -35,6 +48,7 @@ try {
         $homepage->displayHomepage(); // call method to display page
         // (new Homepage())->displayHomepage(); // shorthand version
     }
+
 } catch (Exception $e) {
     $errorMessage = $e->getMessage();
     

@@ -12,7 +12,7 @@ class UpdateComment
     {
         $commentRepository = new CommentRepository();
         $commentRepository->connection = new DatabaseConnection();
-        $comment = $commentRepository->getComments($identifier);
+        $comment = $commentRepository->getComment($identifier);
 
         require($_SERVER['DOCUMENT_ROOT'] . '/templates/update_comment.php');
     }
