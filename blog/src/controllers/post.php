@@ -7,9 +7,9 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/src/model/comment.php');
 use Application\Model\Post\PostRepository; // used as an alias for PostRepository as this is the declard namespace in src/model/Post
 use Application\Model\Comment\CommentRepository;
 
-class Postpage 
+class PostPage 
 {
-    public function displaypostpage(string $identifier)
+    public function displayPostPage(string $identifier)
     {
         $postRepository = new PostRepository(); // make a new instance of class PostRepository
         $postRepository->connection = new DatabaseConnection(); // instantiate PostRepository with instantitated instance of DatabaseConnection

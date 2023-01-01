@@ -5,7 +5,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/src/model/post.php");
 
 use Application\Model\Post\PostRepository; // used as an alias for PostRepository as this is the declard namespace in src/model/Post
 
-class Homepage 
+class HomePage 
 {
     public function displayHomepage() {
         $postRepository = new PostRepository();

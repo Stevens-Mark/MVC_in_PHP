@@ -6,7 +6,7 @@
 <main class="main">
     
     <h1>The super blog of AVBN !</h1>
-    <h2><a href="index.php?action=post&id=<?= urlencode($comment->post_id) ?>">Back to the blog posts</a></h2>
+    <h2><a href="index.php?action=post&id=<?= urlencode($comment->post_id) ?>">Back to the blog post</a></h2>
 
     <h2>Update the Comment</h2>
 

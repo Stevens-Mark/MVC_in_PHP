@@ -12,9 +12,9 @@ try {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
                 $identifier = $_GET['id'];
 
-                $postpage = new Postpage(); // create new instance of class /controller
-                $postpage->displaypostpage($identifier); // call method to display page
-                // (new Postpage())->displaypostpage($identifier); // shorthand version
+                $postpage = new PostPage(); // create new instance of class /controller
+                $postpage->displayPostPage($identifier); // call method to display page
+                // (new PostPage())->displayPostPage($identifier); // shorthand version
             } else {
               throw new Exception("No blog ID sent");
             }
@@ -49,9 +49,9 @@ try {
           throw new Exception("The page you are looking for does not exist.");
         }
     } else {
-        $homepage = new Homepage(); // create new instance of class /controller
+        $homepage = new HomePage(); // create new instance of class /controller
         $homepage->displayHomepage(); // call method to display page
-        // (new Homepage())->displayHomepage(); // shorthand version
+        // (new HomePage())->displayHomepage(); // shorthand version
     }
 
 } catch (Exception $e) {

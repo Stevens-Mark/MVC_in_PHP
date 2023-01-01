@@ -4,8 +4,6 @@ namespace Application\Model\Post;
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/src/lib/database.php'); 
 
-use Application\Model\Comment\CommentRepository;
-
 class Post
 {
     public string $post_id;
